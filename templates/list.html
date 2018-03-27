@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<body>
+   
+   {% if "options" in q_type %}
+
+   <table border = 1>
+      <thead>
+         <td>Question ID</td>
+         <td>Option No.</td>
+         <td>Option String</td>
+      </thead>
+         {% for row in rows %}
+            <tr>
+               <td>{{row["q_id"]}}</td>
+               <td>{{row["option_no"]}}</td>
+               <td> {{row["option_string"]}}</td>
+            </tr>
+         {% endfor %}
+   </table>
+
+   {% else %}
+
+      <table border = 1>
+         <thead>
+            <td>Question ID</td>
+            <td>Question</td>
+            <td>Answer</td>
+            <td>Skill</td>
+            <td>Difficulty</td>
+            <td>Weigntage</td>
+            <td>Question Type</td>
+            <td>Test ID</td>
+
+            {% if "MC" in q_type %}
+               <td>options</td>
+            {% endif %}
+         </thead>
+
+         {% if "MC" in q_type %}
+            {% for row in rows %}
+               <tr>
+                  <td>{{row["q_id"]}}</td>
+                  <td>{{row["question"]}}</td>
+                  <td> {{row["answer"]}}</td>
+                  <td> {{row["skill"]}}</td>
+                  <td> {{row["difficulty_level"]}}</td>
+                  <td> {{row["weigntage"]}}</td>
+                  <td> {{row["type"]}}</td>
+                  <td> {{row["test_id"]}}</td>
+                  <td> {{row["options"]}}</td>
+               </tr>
+            {% endfor %}
+
+         {% else %}
+
+            {% for row in rows %}
+               <tr>
+                  <td>{{row["q_id"]}}</td>
+                  <td>{{row["question"]}}</td>
+                  <td> {{row["answer"]}}</td>
+                  <td> {{row["skill"]}}</td>
+                  <td> {{row["difficulty_level"]}}</td>
+                  <td> {{row["weigntage"]}}</td>
+                  <td> {{row["type"]}}</td>
+                  <td> {{row["test_id"]}}</td>
+               </tr>
+            {% endfor %}
+
+         {% endif %}
+         
+      </table>
+   {% endif %}
+   <a href = "/">Go back to home page</a>
+   
+</body>
+</html>
