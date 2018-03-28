@@ -1,0 +1,79 @@
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<h1>Questions</h1>
+
+<form action = "{{ url_for('addquestion') }}" method = "POST">
+	<button type="submit" name="insert">Insert Data</button><br><br>
+	Type your question here: <input type="text" name="question"><br><br>
+	Type your answer here: <input type="text" name="answer"><br><br>
+	Type question skill here: <input type="text" name="skill"><br><br>
+	Type question difficulty level here: <input type="text" name="difficulty"><br><br>
+	Type question weigntage here: <input type="text" name="weigntage"><br><br>
+	Type question type here: <input type="text" name="type"><br><br>
+	Type test id here: <input type="text" name="test_id"><br><br>
+	
+</form>
+
+<form action = "{{ url_for('addmultiple') }}" method = "POST" enctype = multipart/form-data>
+	Insert from file:
+	<p><input type = file name = file>
+		<input type = submit value = Upload>
+	</form><br><br>
+
+	<form action = "{{ url_for('deletequestion') }}" method = "POST">
+		<input type="submit" name="delete" value="Delete Record"><br><br>
+		Type the qid you want to delete: <input type="text" name="qid"><br><br>
+	</form>
+
+	<form action = "{{ url_for('updatequestion') }}" method = "POST">
+		<button type="submit" name="update">Update Data</button><br><br>
+		Type the qid you want to change: <input type="text" name="qid"><br><br>
+		Type your question here: <input type="text" name="question"><br><br>
+		Type your answer here: <input type="text" name="answer"><br><br>
+		Type question skill here: <input type="text" name="skill"><br><br>
+		Type question difficulty level here: <input type="text" name="difficulty"><br><br>
+		Type question weigntage here: <input type="text" name="weigntage"><br><br>
+		Type question type here: <input type="text" name="type"><br><br>
+		Type test id here: <input type="text" name="test_id"><br><br>
+	</form>
+
+	<form action = "{{ url_for('showquestion') }}" method = "POST">
+		<input type="submit" name="search" value="Search Question Database"><br><br>
+		<script>
+			$(document).ready(function () {
+				$("#select_type").change(function () {
+					var val = $(this).val();
+					if (val == "all") {
+						$("#select").html("<option value='all'>All</option>");
+					} else if (val == "skill") {
+						$("#select").html("<option value='Linear Equations'>Linear Equations</option><option value='Absolute Value Equations'>Absolute Value Equations</option><option value='Polynomial Differentiation'>Polynomial Differentiation</option>");
+					} else if (val == "difficulty_level") {
+						$("#select").html("<option value='1'>1</option><option value='2'>2</option><option value='3'>3</option>");
+					} else if (val == "weigntage") {
+						$("#select").html("<option value='1'>1</option><option value='2'>2</option><option value='3'>3</option>");
+					} else if (val == "type") {
+						$("#select").html("<option value='MC'>MC</option><option value='Fill in Blank'>Fill in Blank</option><option value='True or False'>True or False</option>");
+					} else if (val == "select_one") {
+						$("#select").html("<option value=''>--select one--</option>");
+					}
+				});
+			});
+		</script>
+		<select id = "select_type" name = "select_type">
+			<option value = "">-- select one --</option>
+			<option value = "all">All</option>
+			<option value = "skill">Skill</option>
+			<option value = "difficulty_level">Difficulty</option>
+			<option value = "weigntage">Weigntage</option>
+			<option value = "type">Question Type</option>
+		</select>
+		<select id = "select" name = "select">
+			<option value="">-- select one --</option>
+		</select>
+	</form>
+	<form action = "{{ url_for('showoption') }}" method = "POST">
+		<input type="submit" name="search" value="Show Option type Database"><br><br>
+	</form>
+<h2><a href = "\">go back to home page</a></h2>

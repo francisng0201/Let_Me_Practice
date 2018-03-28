@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, url_for
+from student import render_student
+from question import render_question
 from werkzeug.utils import secure_filename
 import csv
 import os
@@ -17,6 +19,14 @@ def allowed_file(filename):
 @app.route("/")
 def index():
 	return render()
+
+@app.route("/question", methods = ["POST", "GET"])
+def question():
+	return render_question()
+
+@app.route("/student", methods = ["POST", "GET"])
+def student():
+	return render_student()
 
 @app.route('/addquestion',methods = ['POST', 'GET'])
 def addquestion():
@@ -182,6 +192,7 @@ def showquestion():
 @app.route("/showoption", methods = ['POST', 'GET'])
 def showoption():
 	con = sql.connect("mydb.db")
+
 	con.row_factory = sql.Row
 	cur = con.cursor()
 
@@ -194,58 +205,6 @@ def showoption():
 	return render_template("list.html", rows = rows, q_type = "options")
 
 def render():
-	con = sql.connect("mydb.db")
-	cur = con.cursor()
-
-	cur.execute('''CREATE TABLE if not exists Questions (
-		q_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-		skill TEXT NOT NULL,
-		question TEXT NOT NULL, 
-		answer TEXT NOT NULL, 
-		difficulty_level INT NOT NULL, 
-		type TEXT NOT NULL, 
-		weigntage INT NOT NULL, 
-		test_id INT NOT NULL DEFAULT 1)'''
-	)
-
-	cur.execute('''CREATE TABLE if not exists Option_Type (
-		q_id INTEGER NOT NULL, 
-		option_no TEXT NOT NULL,  
-		option_string TEXT NOT NULL)'''
-	)
-
-	cur.execute('''CREATE TABLE if not exists Tests (
-		test_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-		name TEXT NOT NULL,  
-		total_marks TEXT NOT NULL)'''
-	)
-
-	cur.execute('''CREATE TABLE if not exists Students (
-		s_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-		t_id INTEGER NOT NULL)'''
-	)
-
-	cur.execute('''CREATE TABLE if not exists Teachers (
-		t_id INTEGER PRIMARY KEY AUTOINCREMENT)'''
-	)
-
-	cur.execute('''CREATE TABLE if not exists Students_answers (
-		s_id INTEGER PRIMARY KEY AUTOINCREMENT,
-		q_id INTEGER NOT NULL,
-		s_answer TEXT NOT NULL DEFAULT "",
-		score INT NOT NULL DEFAULT 0
-		)'''
-	)
-
-	cur.execute('''CREATE TABLE if not exists Students_tests (
-		s_id INTEGER PRIMARY KEY AUTOINCREMENT,
-		test_id INTEGER NOT NULL,
-		score INT NOT NULL DEFAULT 0
-		)'''
-	)
-
-	con.close()
-
 	return render_template("main.html")
 
 if __name__ == "__main__":
