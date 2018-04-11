@@ -23,21 +23,41 @@
 
       <table border = 1>
          <thead>
-            <td>Question ID</td>
-            <td>Question</td>
-            <td>Answer</td>
-            <td>Skill</td>
-            <td>Difficulty</td>
-            <td>Weigntage</td>
-            <td>Question Type</td>
-            <td>Test ID</td>
+            {% if "student" in q_type%}
+               <td>Student ID</td>
+               <td>First Name</td>
+               <td>Last Name</td>
+               <td>Date of Birth</td>
+               <td>Grade</td>
+            {% else %}
+               <td>Question ID</td>
+               <td>Question</td>
+               <td>Answer</td>
+               <td>Skill</td>
+               <td>Difficulty</td>
+               <td>Weigntage</td>
+               <td>Question Type</td>
+               <td>Test ID</td>
+            {% endif %}
 
             {% if "MC" in q_type %}
                <td>options</td>
             {% endif %}
          </thead>
+         {% if "student" in q_type%}
 
-         {% if "MC" in q_type %}
+            {% for row in rows %}
+               <tr>
+                  <td>{{row["s_id"]}}</td>
+                  <td>{{row["first_name"]}}</td>
+                  <td> {{row["last_name"]}}</td>
+                  <td> {{row["date_of_birth"]}}</td>
+                  <td> {{row["grade"]}}</td>
+               </tr>
+            {% endfor %}
+
+         {% elif "MC" in q_type %}
+
             {% for row in rows %}
                <tr>
                   <td>{{row["q_id"]}}</td>
@@ -71,7 +91,7 @@
          
       </table>
    {% endif %}
-   <a href = "/">Go back to home page</a>
+   <a href="javascript:history.back()">Go Back</a>
    
 </body>
 </html>

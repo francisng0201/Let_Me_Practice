@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<body>
+      <table border = 1>
+         <thead>
+            <td>Score</td>
+            <td>Student ID</td>
+            <td>First Name</td>
+         </thead>
+            {% for row in rows %}
+               <td>{{row[0]}}</td>
+               <td>{{row[1]}}</td>
+               <td>{{row[2]}}</td>
+            {% endfor %}
+
+      </table>
+
+   <a href="javascript:history.back()">Go Back</a>
+   
+</body>
+</html>

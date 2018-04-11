@@ -22,9 +22,9 @@
 		<input type = submit value = Upload>
 	</form><br><br>
 
-	<form action = "{{ url_for('deletequestion') }}" method = "POST">
+	<form action = "{{ url_for('deletequery') }}" method = "POST">
 		<input type="submit" name="delete" value="Delete Record"><br><br>
-		Type the qid you want to delete: <input type="text" name="qid"><br><br>
+		Type the question id you want to delete: <input type="text" name="q_id"><br><br>
 	</form>
 
 	<form action = "{{ url_for('updatequestion') }}" method = "POST">
@@ -39,7 +39,7 @@
 		Type test id here: <input type="text" name="test_id"><br><br>
 	</form>
 
-	<form action = "{{ url_for('showquestion') }}" method = "POST">
+	<form action = "{{ url_for('showdb') }}" method = "POST">
 		<input type="submit" name="search" value="Search Question Database"><br><br>
 		<script>
 			$(document).ready(function () {
@@ -48,7 +48,7 @@
 					if (val == "all") {
 						$("#select").html("<option value='all'>All</option>");
 					} else if (val == "skill") {
-						$("#select").html("<option value='Linear Equations'>Linear Equations</option><option value='Absolute Value Equations'>Absolute Value Equations</option><option value='Polynomial Differentiation'>Polynomial Differentiation</option>");
+						$("#select").html("<option value='Linear Equations'>Linear Equations</option><option value='Absolute Value Equations'>Absolute Value Equations</option><option value='Polynomial Differentiation'>Polynomial Differentiation</option><option value='First Order Differential Equations'>First Order Differential Equations</option>");
 					} else if (val == "difficulty_level") {
 						$("#select").html("<option value='1'>1</option><option value='2'>2</option><option value='3'>3</option>");
 					} else if (val == "weigntage") {
@@ -76,4 +76,9 @@
 	<form action = "{{ url_for('showoption') }}" method = "POST">
 		<input type="submit" name="search" value="Show Option type Database"><br><br>
 	</form>
+
+	<form action = "{{ url_for('advanced') }}" method = "POST">
+		<input type="submit" name="advance" value="Show Advanced Query"><br><br>
+	</form>	
+	
 <h2><a href = "\">go back to home page</a></h2>

@@ -68,7 +68,7 @@ def render_question():
 	)
 
 	cur.execute('''CREATE TABLE if not exists Students_tests (
-		s_id INTEGER PRIMARY KEY AUTOINCREMENT,
+		s_id INTEGER,
 		test_id INTEGER NOT NULL,
 		score INT NOT NULL DEFAULT 0
 		)'''

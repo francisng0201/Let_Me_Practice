@@ -21,4 +21,5 @@ def render_student():
 		t_id INTEGER PRIMARY KEY AUTOINCREMENT)'''
 	)
 
+	con.commit()
 	return render_template("student.html")
