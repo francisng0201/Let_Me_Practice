@@ -1,11 +1,35 @@
 <!doctype html>
 <html>
+     {% include "head.html" %}
    <body>
-   	<form action = "{{ url_for('question') }}" method = "POST">
-    	<button type="submit" name="question">Access Question Database</button><br><br>
-	</form>
-	<form action = "{{ url_for('student') }}" method = "POST">
-    	<button type="submit" name="student">Access Student Database</button><br><br>
-	</form>
+     {% include "header.html" %}
+     <!--<form action = "{{ url_for('question') }}" method = "POST">
+      <button type="submit" name="question">Access Question Database</button><br><br>
+     </form>-->
+  <!--<form action = "{{ url_for('student') }}" method = "POST">
+      <button type="submit" name="student">Access Student Database</button><br><br>
+  </form>-->
+    <form class="form-signin" method="POST" action="http://kizvm.net:5000/signin">
+      {% if prompt %}
+        <div class="alert alert-primary">Please sign in.</div>
+      {% endif %}
+      {% if success %}
+        <div class="alert alert-success">Sign in successful!</div>
+      {% endif %}
+      {% if failure %}
+        <div class="alert alert-danger">Invalid credentials.</div>
+      {% endif %}
+      <img class="mb-4" src="/pub/img/logo.png" alt="" width="300" height="64">
+      <!--<h1 class="h5 mb-4 font-weight-normal" style="text-align:
+        center;">Sign In</h1>-->
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="text" name="username" id="inputUsername" class="form-control"
+      placeholder="👤 Username" required autofocus>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" name="password" id="inputPassword" class="form-control"
+      placeholder="🔑 Password" required>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
    </body>
 </html>
