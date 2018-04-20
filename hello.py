@@ -28,7 +28,7 @@ def pub(path):
     return send_from_directory('static', path)
 
 @app.route('/test', methods=['POST', 'GET'])
-def dash():
+def test():
   if not 'username' in request.cookies:
     return render_template('main.html', prompt=True)
   return render_template('test.html', username=request.cookies['username'])

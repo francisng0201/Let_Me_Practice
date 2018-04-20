@@ -223,3 +223,7 @@ button {
   fill: #ccc !important;
   transition: 0.5s ease;
 }*/
+
+.testcol-left {
+  background-color: #003366 !important;
+}
