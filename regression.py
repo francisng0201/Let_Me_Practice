@@ -66,17 +66,20 @@ class AccuracyModel(object):
 		return 1.0 / (1.0 + math.exp(-z))
 
 def get_accuracy(student_id):
-	skills = ["unit-conversion"]
 	con = sql.connect("mydb.db")
 	cur = con.cursor()
+	cur.execute("SELECT DISTINCT(SKILL) FROM STUDENT_TEST")
+	rows = cur.fetchall()
+	skills = [i[0] for i in rows]
 	d = {}
 	for skill in skills:
-		cur.execute("Select correct from STUDENT_TEST where ITEST_id = ? AND SKILL = ? order by actionId", (student_id, skill))
-		rows = cur.fetchall()
-		array = [i[0] for i in rows]
-		correct = sum(array)
-		accuracy = AccuracyModel(len(array), correct, array)
-		d[skill] = accuracy.predict()
+		if skill:
+			cur.execute("Select correct from STUDENT_TEST where ITEST_id = ? AND SKILL = ? order by actionId", (student_id, skill))
+			rows = cur.fetchall()
+			array = [i[0] for i in rows]
+			correct = sum(array)
+			accuracy = AccuracyModel(len(array), correct, array)
+			d[skill] = accuracy.predict()
 	con.close()
 	return d
 
