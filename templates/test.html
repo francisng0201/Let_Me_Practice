@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+     {% include "head.html" %}
+   <body style="/*padding-top: 8rem;*/">
+     {% include "header.html" %}
+     <!--<form action = "{{ url_for('question') }}" method = "POST">
+      <button type="submit" name="question">Access Question Database</button><br><br>
+     </form>-->
+  <!--<form action = "{{ url_for('student') }}" method = "POST">
+      <button type="submit" name="student">Access Student Database</button><br><br>
+  </form>-->
+  <script>
+    $(document).ready(() => {
+      katex.render('y \\leq \\frac{17 + 3x^2}{x - \\textrm{log }\\sqrt{5x}}',
+        document.getElementById('lmp-ineq'));
+    });
+  </script>
+  <div class="container">
+    <div style="margin-bottom: 0; max-width: 660px; margin-left: auto; margin-right: auto;" class="row">
+      <div style="height: 92px; padding-top: 12px;" class="col-lg"></div>
+    </div>
+    </div>
+    <div style="max-width: 660px; margin-left: auto; margin-right: auto;" class="row">
+      <div style="height: 32px; padding-top: 12px;" class="col-lg">
+        {% if prompt %}
+          <div class="alert alert-primary alert-dismissible fade show" role="alert">
+          Please sign in.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endif %}
+        {% if success %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Success.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endif %}
+        {% if failure %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Error on our end.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div style="max-width: 920px; margin-left: auto; margin-right: auto;
+  margin-bottom: 10px;" class="row">
+    <h1 style="color: #e7c252; padding: 15px; background-color: #003366
+      !important; box-shadow: 2px 2px 2px #00000054; display: inline-block;
+      width: 100%; margin-bottom: 10px;">Quiz 7 – Inequalities</h1>
+    <br>
+    <div style="margin-top: 5px; height: 32px; width: 100%; text-align: right;
+      position: relative;">
+      <span style="float: left; margin-right: 10px;"><strong>Question 3  </strong></span>
+      <span class="badge badge-warning" style="position: relative; top: 3px;
+      float: left;"><strong>Due by 4/23/18</strong></span>
+      <span class="badge badge-dark" style="position: relative; top: -2px; background-color: #003366
+        !important; margin-right: 5px;">Algebra</span>
+      <span class="badge badge-dark" style="position: relative; top: -2px; background-color: #003366; margin-right: 5px;">Functions</span>
+      <span class="badge badge-dark" style="position: relative; top: -2px; background-color: #003366; margin-right: 5px;">Inequalities</span>
+    </div>
+  </div>
+  <div id="testrow" style="margin-bottom: 10px; max-width: 920px; margin-left: auto; margin-right: auto;" class="row">
+    <div id="testcol-left" style="padding: 25px; border: 1px solid #003366;
+      border-top-left-radius: 5px; border-bottom-left-radius: 5px; height:
+      256px; line-height: 256px; border-right: none;" class="col-lg">
+      <div style="display: inline-block; line-height: normal;">
+        Consider the inequality
+        <div id="lmp-ineq" style="width: 100%; height: 64px; line-height: 64px;
+        text-align: center;"></div>
+        Which pair of points satisfies this inequality?
+      </div>
+            <div style="position: absolute; width: 3px; top: 0; bottom: 0;
+            right: 0;" class="gradientbar-vert"></div>
+    </div>
+    <div style="background-color: #003366; color: white; height: 256px; line-height: 256px;
+      padding-left: 25px;" id="testcol-right"  class="col-lg">
+      <div style="margin-top: 65px; margin-left: 50px; display: inline-block; line-height: normal;">
+        <div style="margin-bottom: 10px;" class="custom-control custom-radio">
+          <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+          <label class="custom-control-label" style="margin-left: 10px;" for="customRadio1">(A) (2, -4)</label>
+        </div>
+        <div style="margin-bottom: 10px;" class="custom-control custom-radio">
+          <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+          <label class="custom-control-label" style="margin-left: 10px;" for="customRadio2">(B) (7, 1)</label>
+        </div>
+        <div style="margin-bottom: 10px;" class="custom-control custom-radio">
+          <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+          <label class="custom-control-label" style="margin-left: 10px;" for="customRadio3">(C) (-2, 4)</label>
+        </div>
+        <div style="margin-bottom: 10px;" class="custom-control custom-radio">
+          <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
+          <label class="custom-control-label" style="margin-left: 10px;" for="customRadio4">(D) (4, -2)</label>
+        </div>
+      </div>
+    </div>
+  </div>
+   </body>
+</html>

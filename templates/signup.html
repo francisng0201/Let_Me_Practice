@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <base href="http://kizvm.net:5000">
+     {% include "head.html" %}
+     <title>Sign Up</title>
+   <body>
+     {% include "header.html" %}
+
+    <form class="form-signin" method="POST" action="/signup">
+      {% if success %}
+        <div class="alert alert-success">Sign up successful!</div>
+      {% endif %}
+      {% if failure %}
+        <div class="alert alert-danger">Please compelete all fields. Minimum 3
+          charaacters.</div>
+      {% endif %}
+      <img class="mb-4" src="/pub/img/logo.png" alt="" width="300" height="64">
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input name="username" type="text" id="inputUsername"
+      style="margin-bottom: 10px;" class="form-control" placeholder="👤 Username" required autofocus>
+
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input name="password" type="password" id="inputPassword"
+      class="form-control" placeholder="🔑 Password">
+
+      <label for="inputPassword2" class="sr-only">Confirm</label>
+      <input type="password" id="inputPassword2" class="form-control" placeholder="🔑 Confirm" required>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    </form>
+
+   </body>
+</html>

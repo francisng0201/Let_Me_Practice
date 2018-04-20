@@ -1,0 +1,229 @@
+
+.form-signin {
+  width: 100%;
+  max-width: 660px;
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.btn {
+  border-color: #aaa !important;
+  background-color: #003366 !important;
+}
+
+nav {
+  background-color: #003366 !important;
+}
+
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFWJ0bf8pkAp6a.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFUZ0bf8pkAp6a.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFWZ0bf8pkAp6a.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFVp0bf8pkAp6a.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFWp0bf8pkAp6a.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFW50bf8pkAp6a.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFVZ0bf8pkAg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+* {
+  font-family: 'Open Sans' !important;
+}
+
+.navbar-brand {
+}
+
+nav {
+  box-shadow: 0px 0px 1px black;
+}
+
+.gradientbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, #ffa31a, #ffff80, #ffa31a, #ffff80, #ffa31a, #ffff80);
+}
+
+.gradientbar-vert {
+  background: linear-gradient(to bottom, #ffa31a, #ffff80, #ffa31a, #ffff80, #ffa31a, #ffff80);
+}
+
+.gradientbar-signup {
+  z-index: 999;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 315px;
+  background: linear-gradient(to right, #ffa31a, #ffff80, #ffa31a, #ffff80, #ffa31a, #ffff80);
+  transition: 0.5s ease;
+}
+
+.lm-right {
+  transform: translateX(315px);
+  transition: 0.5s ease;
+}
+
+.lm-left {
+  transform: none;
+  transition: 0.5s ease;
+}
+
+button {
+}
+
+.nav-link {
+  color: white;
+}
+
+.active > nav-link {
+  color: #f5cc51 !important;
+}
+
+.a-simple {
+  color: #3372b1;
+  text-decoration: underline;
+}
+
+#lmp-brand, #lmp-brand span {
+  transition: 0.4s ease;
+}
+
+#lmp-brand:hover span {
+  transition: 0.4s ease;
+}
+
+#lmp-brand:hover .lmp-brand-gr {
+  transform: rotate(-5deg) !important;
+  color: #ddd;
+}
+
+#lmp-brand:hover .lmp-brand-w {
+  transform: rotate(5deg) !important;
+  color: #f5cc51 !important;
+}
+
+#lmp-student, #lmp-educator {
+  color: #aaa;
+}
+
+#lmp-student h4, #lmp-educator h4 {
+  color: #aaa;
+}
+
+#lmp-student svg path {
+  fill: #aaa;
+}
+
+#lmp-educator svg path {
+  fill: #aaa;
+}
+
+.lmp-active {
+  color: #f5cc51 !important;
+  transition: 0.5s ease;
+}
+
+.lmp-active h4 {
+  color: #f5cc51 !important;
+  transition: 0.5s ease;
+}
+
+.lmp-active svg path, .lmp-active svg circle {
+  fill: #f5cc51 !important;
+  transition: 0.5s ease;
+}
+
+.lmp-choice svg {
+  transition: 0.5s ease;
+}
+
+/*.lmp-choice:hover {
+  cursor: pointer;
+}
+
+.lmp-choice:hover h4 {
+  color: #ccc !important;
+  cursor: pointer;
+  transition: 0.5s ease;
+}
+
+.lmp-choice:hover svg path, .lmp-choice:hover svg circle {
+  fill: #ccc !important;
+  transition: 0.5s ease;
+}*/
+
+.testcol-left {
+  background-color: #003366 !important;
+}
