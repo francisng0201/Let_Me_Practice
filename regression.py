@@ -65,6 +65,21 @@ class AccuracyModel(object):
 
 		return 1.0 / (1.0 + math.exp(-z))
 
+def get_accuracy(student_id):
+	skills = ["unit-conversion"]
+	con = sql.connect("mydb.db")
+	cur = con.cursor()
+	d = {}
+	for skill in skills:
+		cur.execute("Select correct from STUDENT_TEST where ITEST_id = ? AND SKILL = ? order by actionId", (student_id, skill))
+		rows = cur.fetchall()
+		array = [i[0] for i in rows]
+		correct = sum(array)
+		accuracy = AccuracyModel(len(array), correct, array)
+		d[skill] = accuracy.predict()
+	con.close()
+	return d
+
 def main():
 	# l = [
 	# [0,1], 
@@ -87,23 +102,19 @@ def main():
 	# [0,0,0,0,0,1,1,1,1,1,1,1,1,1,1],
 	# [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1]
 	# ]
-	con = sql.connect("mydb.db")
-	cur = con.cursor()
-	cur.execute('''Select correct
-		from STUDENT_TEST
-		where ITEST_id = 7278 AND SKILL = "unit-conversion" 
-		order by actionId''')
-	rows = cur.fetchall()
-	array = [i[0] for i in rows]
-	correct = sum(array)
-	accuracy = AccuracyModel(len(array), correct, array)
-	print accuracy.predict()
-	#for answer in l:
-	#	correct = sum(answer)
-	#	correct_array = answer
-	#	accuracy = AccuracyModel(len(answer), correct, correct_array)
-	#	print answer, accuracy.predict()
-
+	# con = sql.connect("mydb.db")
+	# cur = con.cursor()
+	# cur.execute('''Select correct
+	# 	from STUDENT_TEST
+	# 	where ITEST_id = 7278 AND SKILL = "unit-conversion" 
+	# 	order by actionId''')
+	# rows = cur.fetchall()
+	# array = [i[0] for i in rows]
+	# correct = sum(array)
+	# accuracy = AccuracyModel(len(array), correct, array)
+	# print accuracy.predict()
+	d = get_accuracy(7278)
+	print d
 
 if __name__ == "__main__":
 	main()
