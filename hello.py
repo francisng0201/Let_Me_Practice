@@ -27,6 +27,12 @@ def index():
 def pub(path):
     return send_from_directory('static', path)
 
+@app.route('/test', methods=['POST', 'GET'])
+def dash():
+  if not 'username' in request.cookies:
+    return render_template('main.html', prompt=True)
+  return render_template('test.html', username=request.cookies['username'])
+
 @app.route("/question", methods = ["POST", "GET"])
 def question():
   if not 'username' in request.cookies:
@@ -344,11 +350,11 @@ def advanced():
 @app.route('/signup', methods = ['GET', 'POST'])
 def signup():
   if request.method == 'GET':
-    return render_template('signup.html', failure=False)
+    return render_template('signup2.html', failure=False)
   if not request.form or not 'username' in request.form or not 'password' in request.form:
-    return render_template('signup.html', failure=True)
+    return render_template('signup2.html', failure=True)
   if len(request.form['username']) < 3 or len(request.form['password']) < 3:
-    return render_template('signup.html', failure=True)
+    return render_template('signup2.html', failure=True)
   con = sql.connect('mydb.db')
   cur = con.cursor()
   # TODO sql injection, etc.
@@ -356,7 +362,7 @@ def signup():
   s_id = cur.fetchall()[0][0] + 1
   cur.execute('INSERT into Users VALUES (?, ?, ?)', (s_id, request.form['username'], hashlib.sha224(request.form['password'].encode()).hexdigest()))
   con.commit()
-  return render_template('signup.html', failure=False, success=True)
+  return render_template('signup2.html', failure=False, success=True)
 
 @app.route('/signin', methods = ['GET', 'POST'])
 def signin():
@@ -378,4 +384,4 @@ def signin():
   return resp
 
 if __name__ == "__main__":
-    app.run(debug = True, host='0.0.0.0', port=5000)
+    app.run(debug = True, host='0.0.0.0', port=5001)
