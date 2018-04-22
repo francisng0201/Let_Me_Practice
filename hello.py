@@ -108,7 +108,6 @@ def addmultiple():
         reader = csv.DictReader(file)
         for row in reader:
           cur = con.cursor()
-
           if "question" in request.referrer:
             cur.execute("INSERT INTO Questions (question, answer, skill, difficulty_level, type, weigntage, test_id) VALUES (?, ?, ?, ?, ?, ?, ?)", 
               (row["Qtext"], row["AnsString"], row["Skill"], row["Difficulty"], row["Qtype"], row["Weightage"], 1))
@@ -129,11 +128,18 @@ def addmultiple():
 
             con.commit()
 
+          elif "student_test" in request.referrer:
+            cur.execute("INSERT INTO STUDENT_TEST (ITEST_id, actionId, skill, problemId, assignmentId, assistmentId, startTime, endTime, timeTaken, correct, original, scaffold, attemptCount, problemType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+              (row["ITEST_id"], row["actionId"], row["skill"], row["problemId"], row["assignmentId"], row["assistmentId"], row["startTime"], row["endTime"], row["timeTaken"], row["correct"], row["original"], row["scaffold"], row["attemptCount"], row["problemType"]))
+
+            con.commit()
+
           elif "student" in request.referrer:
             cur.execute("INSERT INTO Students (first_name, last_name, date_of_birth, grade) VALUES (?, ?, ?, ?, ?)", 
               (row["Qtext"], row["AnsString"], row["Skill"], row["Difficulty"], row["grade"]))
 
-            cur.comit()
+            con.commit()
+
       msg = "Upload success"
       return render_template("result.html", msg = msg)
   return render_template("result.html", msg = msg)
@@ -201,8 +207,8 @@ def updatequestion():
 
 @app.route("/showdb", methods = ['POST', 'GET'])
 def showdb():
-  if not 'username' in request.cookies:
-    return render_template('main.html', prompt=True)
+  #if not 'username' in request.cookies:
+  #  return render_template('main.html', prompt=True)
   con = sql.connect("mydb.db")
   con.row_factory = sql.Row
   cur = con.cursor()
@@ -222,7 +228,9 @@ def showdb():
       else:
         cur.execute("SELECT * FROM Questions WHERE " + request.form["select_type"] + " = ?", (request.form["select"],))
         q_type = "Others"
-
+    elif "student_test" in request.referrer:
+      cur.execute("SELECT * FROM STUDENT_TEST")
+      q_type = "student_test"
     elif "student" in request.referrer:
       if request.form["select"] == "all":
         cur.execute("SELECT * FROM Students")
@@ -382,6 +390,11 @@ def signin():
   resp = make_response(render_template('main.html', success=True))
   resp.set_cookie('username', request.form['username'])
   return resp
+
+@app.route('/student_test', methods = ['POST', 'GET'])
+def student_test():
+  return render_template("student_test.html")
+
 
 if __name__ == "__main__":
     app.run(debug = True, host='0.0.0.0', port=5001)
