@@ -24,7 +24,22 @@
 
       <table border = 1>
          <thead>
-            {% if "student" in q_type%}
+            {% if "student_test" in q_type %}
+               <td>ITEST_id</td>
+               <td>actionId</td>
+               <td>skill</td>
+               <td>problemId</td>
+               <td>assignmentId</td>
+               <td>assistmentId</td>
+               <td>startTime</td>
+               <td>endTime</td>
+               <td>timeTaken</td>
+               <td>correct</td>
+               <td>original</td>
+               <td>scaffold</td>
+               <td>attemptCount</td>
+               <td>problemType</td>
+            {% elif "student" in q_type%}
                <td>Student ID</td>
                <td>First Name</td>
                <td>Last Name</td>
@@ -45,7 +60,26 @@
                <td>options</td>
             {% endif %}
          </thead>
-         {% if "student" in q_type%}
+         {% if "student_test" in q_type%}
+            {% for row in rows %}
+               <tr>
+                  <td>{{row["ITEST_id"]}}</td>
+                  <td>{{row["actionId"]}}</td>
+                  <td> {{row["skill"]}}</td>
+                  <td> {{row["problemId"]}}</td>
+                  <td> {{row["assignmentId"]}}</td>
+                  <td>{{row["assistmentId"]}}</td>
+                  <td>{{row["startTime"]}}</td>
+                  <td> {{row["endTime"]}}</td>
+                  <td> {{row["timeTaken"]}}</td>
+                  <td> {{row["correct"]}}</td>
+                  <td>{{row["original"]}}</td>
+                  <td> {{row["scaffold"]}}</td>
+                  <td> {{row["attemptCount"]}}</td>
+                  <td> {{row["problemType"]}}</td>
+               </tr>
+            {% endfor %}
+         {% elif "student" in q_type %}
 
             {% for row in rows %}
                <tr>
