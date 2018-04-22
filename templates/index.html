@@ -2,13 +2,9 @@
 <html>
      {% include "head.html" %}
    <body style="/*padding-top: 8rem;*/">
+     {% with username=username %}
      {% include "header.html" %}
-     <!--<form action = "{{ url_for('question') }}" method = "POST">
-      <button type="submit" name="question">Access Question Database</button><br><br>
-     </form>-->
-  <!--<form action = "{{ url_for('student') }}" method = "POST">
-      <button type="submit" name="student">Access Student Database</button><br><br>
-  </form>-->
+     {% endwith %}
   <div class="container">
     <div style="margin-bottom: 0; max-width: 660px; margin-left: auto; margin-right: auto;" class="row">
       <div style="height: 92px; padding-top: 12px;" class="col-lg"></div>
@@ -28,7 +24,7 @@
       <div style="height: 72px; padding-top: 12px;" class="col-lg">
         {% if prompt %}
           <div class="alert alert-primary alert-dismissible fade show" role="alert">
-          Please sign in.
+            {% if message %}{{message}}{% else %}Please sign in.{% endif %}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -36,7 +32,7 @@
         {% endif %}
         {% if success %}
           <div class="alert alert-success alert-dismissible fade show" role="alert">
-            Successful.
+            {% if message %}{{message}}{% else %}You did it!{% endif %}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -44,7 +40,7 @@
         {% endif %}
         {% if failure %}
           <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            Invalid credentials.
+            {% if message %}{{message}}{% else %}Invalid request.{% endif %}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

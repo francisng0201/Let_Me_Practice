@@ -1,0 +1,22 @@
+{
+  "name": "cs411sp18project",
+  "version": "1.0.0",
+  "description": "* take tests * front-end * advanced functionality:   * concepts, linear algebra   * graph   * determine what student does not understand * linear regression; gaussian",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/francisng0201/Let_Me_Practice.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/francisng0201/Let_Me_Practice/issues"
+  },
+  "homepage": "https://github.com/francisng0201/Let_Me_Practice#readme",
+  "dependencies": {
+    "vis": "^4.21.0"
+  }
+}
