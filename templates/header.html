@@ -22,12 +22,19 @@
       </li>
     </ul>
     <ul class="navbar-nav" style="float: right; margin-right: 30px;">
-      <li class="nav-item">
-        <a class="nav-link" href="http://kizvm.net:5001/signin">Sign In</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="http://kizvm.net:5001/signup">Sign Up</a>
-      </li>
+      {% if username %}
+        <li class="nav-item">
+          <a class="nav-link" href="http://kizvm.net:5001/dashboard/">Welcome back,
+            {{username}}</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="http://kizvm.net:5001/users/signin">Sign In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://kizvm.net:5001/users/new">Sign Up</a>
+        </li>
+      {% endif %}
     </ul>
   </div>
 </nav>

@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import g, request, redirect, url_for
+from flask import g, request, redirect, url_for, session
 
 def require_signin(route):
     @wraps(route)
@@ -7,4 +7,4 @@ def require_signin(route):
         if 'username' not in session:
             return redirect(url_for('/signin?prompt=true'))
         return route(*args, **kwargs)
-    return fn(*args, **kwargs)
+    return fn
