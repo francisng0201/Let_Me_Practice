@@ -66,7 +66,7 @@ class AccuracyModel(object):
 		return 1.0 / (1.0 + math.exp(-z))
 
 def get_accuracy(student_id):
-	con = sql.connect("mydb.db")
+	con = sql.connect("../../mydb.db")
 	cur = con.cursor()
 	cur.execute("SELECT DISTINCT(SKILL) FROM STUDENT_TEST")
 	rows = cur.fetchall()
@@ -82,6 +82,8 @@ def get_accuracy(student_id):
 			d[skill] = accuracy.predict()
 	con.close()
 	return d
+
+def next_question(d):
 
 def main():
 	# l = [
@@ -116,7 +118,8 @@ def main():
 	# correct = sum(array)
 	# accuracy = AccuracyModel(len(array), correct, array)
 	# print accuracy.predict()
-	d = get_accuracy(7278)
+	#for i in ['1821','1079','3601','954','1483','5347','8','7258','336','337','5638','6746','312','522','688']:
+	d = get_accuracy(1079)
 	print d
 
 if __name__ == "__main__":

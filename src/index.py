@@ -28,5 +28,11 @@ def index():
 def serve_static(path):
     return send_from_directory('./static/', path)
 
+from require_signin import *
+@app.route('/test')
+@require_signin
+def test():
+    return render_template('test.html')
+
 if __name__ == "__main__":
     app.run(debug = True, host='0.0.0.0', port=5005)
