@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+     {% include "head.html" %}
+<body>
+   
+   {% if "options" in q_type %}
+
+   <table border = 1>
+      <thead>
+         <td>Question ID</td>
+         <td>Option No.</td>
+         <td>Option String</td>
+      </thead>
+         {% for row in rows %}
+            <tr>
+               <td>{{row["q_id"]}}</td>
+               <td>{{row["option_no"]}}</td>
+               <td> {{row["option_string"]}}</td>
+            </tr>
+         {% endfor %}
+   </table>
+
+   {% else %}
+
+      <table border = 1>
+         <thead>
+            {% if "student_test" in q_type %}
+               <td>ITEST_id</td>
+               <td>actionId</td>
+               <td>skill</td>
+               <td>problemId</td>
+               <td>assignmentId</td>
+               <td>assistmentId</td>
+               <td>startTime</td>
+               <td>endTime</td>
+               <td>timeTaken</td>
+               <td>correct</td>
+               <td>original</td>
+               <td>scaffold</td>
+               <td>attemptCount</td>
+               <td>problemType</td>
+            {% elif "student" in q_type%}
+               <td>Student ID</td>
+               <td>First Name</td>
+               <td>Last Name</td>
+               <td>Date of Birth</td>
+               <td>Grade</td>
+            {% else %}
+               <td>Question ID</td>
+               <td>Question</td>
+               <td>Answer</td>
+               <td>Skill</td>
+               <td>Difficulty</td>
+               <td>Weigntage</td>
+               <td>Question Type</td>
+               <td>Test ID</td>
+            {% endif %}
+
+            {% if "MC" in q_type %}
+               <td>options</td>
+            {% endif %}
+         </thead>
+         {% if "student_test" in q_type%}
+            {% for row in rows %}
+               <tr>
+                  <td>{{row["ITEST_id"]}}</td>
+                  <td>{{row["actionId"]}}</td>
+                  <td> {{row["skill"]}}</td>
+                  <td> {{row["problemId"]}}</td>
+                  <td> {{row["assignmentId"]}}</td>
+                  <td>{{row["assistmentId"]}}</td>
+                  <td>{{row["startTime"]}}</td>
+                  <td> {{row["endTime"]}}</td>
+                  <td> {{row["timeTaken"]}}</td>
+                  <td> {{row["correct"]}}</td>
+                  <td>{{row["original"]}}</td>
+                  <td> {{row["scaffold"]}}</td>
+                  <td> {{row["attemptCount"]}}</td>
+                  <td> {{row["problemType"]}}</td>
+               </tr>
+            {% endfor %}
+         {% elif "student" in q_type %}
+
+            {% for row in rows %}
+               <tr>
+                  <td>{{row["s_id"]}}</td>
+                  <td>{{row["first_name"]}}</td>
+                  <td> {{row["last_name"]}}</td>
+                  <td> {{row["date_of_birth"]}}</td>
+                  <td> {{row["grade"]}}</td>
+               </tr>
+            {% endfor %}
+
+         {% elif "MC" in q_type %}
+
+            {% for row in rows %}
+               <tr>
+                  <td>{{row["q_id"]}}</td>
+                  <td>{{row["question"]}}</td>
+                  <td> {{row["answer"]}}</td>
+                  <td> {{row["skill"]}}</td>
+                  <td> {{row["difficulty_level"]}}</td>
+                  <td> {{row["weigntage"]}}</td>
+                  <td> {{row["type"]}}</td>
+                  <td> {{row["test_id"]}}</td>
+                  <td> {{row["options"]}}</td>
+               </tr>
+            {% endfor %}
+
+         {% else %}
+
+            {% for row in rows %}
+               <tr>
+                  <td>{{row["q_id"]}}</td>
+                  <td>{{row["question"]}}</td>
+                  <td> {{row["answer"]}}</td>
+                  <td> {{row["skill"]}}</td>
+                  <td> {{row["difficulty_level"]}}</td>
+                  <td> {{row["weigntage"]}}</td>
+                  <td> {{row["type"]}}</td>
+                  <td> {{row["test_id"]}}</td>
+               </tr>
+            {% endfor %}
+
+         {% endif %}
+         
+      </table>
+   {% endif %}
+   <a href="javascript:history.back()">Go Back</a>
+   
+</body>
+</html>

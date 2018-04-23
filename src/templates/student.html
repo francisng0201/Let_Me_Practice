@@ -1,0 +1,60 @@
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<h1>Student</h1>
+
+<form action = "{{ url_for('addstudent') }}" method = "POST">
+	<button type="submit" name="insert">Insert Data</button><br><br>
+	First Name: <input type="text" name="first_name"><br><br>
+	Last Name: <input type="text" name="last_name"><br><br>
+	Date of Birth: <input type="text" name="date_of_birth"><br><br>
+	Grade: <input type="text" name="grade"><br><br>
+</form>
+
+<form action = "{{ url_for('addmultiple') }}" method = "POST" enctype = multipart/form-data>
+	Insert from file:
+	<p><input type = file name = file>
+		<input type = submit value = Upload>
+	</form><br><br>
+
+	<form action = "{{ url_for('deletequery') }}" method = "POST">
+		<input type="submit" name="delete" value="Delete Record"><br><br>
+		Type the student id you want to delete: <input type="text" name="s_id"><br><br>
+	</form>
+
+	<form action = "{{ url_for('updatestudent') }}" method = "POST">
+		<button type="submit" name="update">Update Data</button><br><br>
+		Type the Student ID you to change: <input type="text" name="s_id"><br><br>
+		Type new First Name here: <input type="text" name="first_name"><br><br>
+		Type new Last Name here: <input type="text" name="last_name"><br><br>
+		Type new Last Name here: <input type="text" name="date_of_birth"><br><br>
+		Type new Grade here: <input type="text" name="grade"><br><br>
+	</form>
+
+	<form action = "{{ url_for('showdb') }}" method = "POST">
+		<input type="submit" name="search" value="Search Student Database"><br><br>
+		<script>
+			$(document).ready(function () {
+				$("#select_type").change(function () {
+					var val = $(this).val();
+					if (val == "all") {
+						$("#select").html("<option value='all'>All</option>");
+					} else if (val == "grade") {
+						$("#select").html("<option value='6'>6</option><option value='7'>7</option><option value='8'>8</option>");
+					} else if (val == "select_one") {
+						$("#select").html("<option value=''>--select one--</option>");
+					}
+				});
+			});
+		</script>
+		<select id = "select_type" name = "select_type">
+			<option value = "">-- select one --</option>
+			<option value = "all">All</option>
+			<option value = "grade">Grade</option>
+		</select>
+		<select id = "select" name = "select">
+			<option value="">-- select one --</option>
+		</select>
+	</form>
+<h2><a href = "\">go back to home page</a></h2>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+     {% include "head.html" %}
+   <body style="/*padding-top: 8rem;*/">
+     {% with username=username %}
+     {% include "header.html" %}
+     {% endwith %}
+  <div class="container">
+    <div style="margin-bottom: 0; max-width: 660px; margin-left: auto; margin-right: auto;" class="row">
+      <div style="height: 92px; padding-top: 12px;" class="col-lg"></div>
+    </div>
+    {% if alert %}
+    <div style="margin-bottom: 0; max-width: 660px; margin-left: auto; margin-right: auto;" class="row">
+      <div style="height: 92px; padding-top: 12px;" class="col-lg">
+        {% if alert == 'prompt' %}
+          <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            {% if message %}{{message}}{% else %}You did it!{% endif %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endif %}
+        {% if alert == 'success' %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {% if message %}{{message}}{% else %}You did it!{% endif %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endif %}
+        {% if alert == 'error' %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {% if message %}{{message}}{% else %}Invalid credentials.{% endif %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div style="margin-bottom: 0; max-width: 630px; margin-left: auto; margin-right: auto;" class="row">
+      <div style="height: 128px; padding-top: 12px; margin-top: 10px; text-align: center; color:
+      white; background-color: #003366 !important;" class="col-lg">
+        <a id="lmp-brand" class="navbar-brand" style="font-size: 64px; color: #aaa; margin-left: 30px;" href="#">
+          <span class="lmp-brand-gr" style="display: inline-block; transform: rotate(8deg); margin: 0; position: relative; bottom: 0px;">Let</span>
+          <span class="lmp-brand-w" style="display: inline-block; transform: rotate(-8deg); margin-left: -2px; position: relative; color: white; top: -1px;">Me</span>
+          <span class="lmp-brand-gr" style="display: inline-block; transform: rotate(8deg); margin-left: -2px; position: relative; bottom: 0px;">Practice</span>
+          <span class="lmp-brand-w" style="margin-left: -2px; color: white; position: relative;">!</span>
+        </a>
+      </div>
+    </div>
+    <div style="max-width: 630px; margin-left: auto; margin-right: auto;" class="row">
+      <div style="height: 72px; padding-top: 12px;" class="col-lg">
+          <span style="font-style: italic;">LetMePractice!</span> &nbsp;is an adaptive educational tool designed to aid the
+          learning of each student at his or her ideal pace. <a class="a-simple" href="/about">Read more</a>
+      </div>
+    </div>
+    <form style="padding-top: 0;" class="form-signin" method="POST" action="http://kizvm.net:5005/users/signin">
+      <div class="container">
+        <div class="row" style="max-height: 231px;">
+          <div style="background-color: #003366; color: white; line-height:
+          206px; position: relative;" class="col-md
+            col-lmp">
+            <div style="position: absolute; width: 3px; top: 0; bottom: 0;
+            right: 0;" class="gradientbar-vert"></div>
+            <div style="text-align: right; margin-left: 120px; margin-top: 20px; display: inline-block;">
+              <h4 style="margin-bottom: 29px;"><span
+                  style="color: #aaa;">Adaptive</span></h4>
+              <h4 style="margin-bottom: 29px;"><span
+                  style="color: #aaa;">Personalized</span></h4>
+              <h4 style="margin-bottom: 29px;"><span
+                  style="color: #aaa;">Informed</span></h4>
+              <h4 style="margin-bottom: 15px; color: #f5cc51;">Effective<span
+                  style="color: #aaa;"></span></h4>
+            </div>
+          </div>
+          <div style="" class="col-md col-lmp">
+            <div style="margin-top: 20px;"></div>
+            <h4 style="margin-bottom: 13px;">&#23398; Start learning</h4>
+            <!--<h1 class="h5 mb-4 font-weight-normal" style="text-align:
+              center;">Sign In</h1>-->
+            <input style="margin-bottom: 12px;" type="text" name="username" id="inputUsername" class="form-control"
+            placeholder="👤 Username" style="margin-bottom: 10px;" required>
+            <input style="margin-bottom: 12px;" type="password" name="password" id="inputPassword" class="form-control"
+            placeholder="🔑 Password" required>
+            <button style="font-size: 24px;" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+          </div>
+        </div>
+        <div style="margin-top: 20px;" class="row">
+          <div class="col-md">
+            <h6 style="text-align: center;">Not a member? <a class="a-simple" href="/signup">Sign up</a>.</h6>
+            <h6 style="margin-top: 15px; font-size: 14px; text-align: center;">Designed at the University of Illinois at Urbana-Champaign (final project, CS 411).</h6>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+   </body>
+</html>
