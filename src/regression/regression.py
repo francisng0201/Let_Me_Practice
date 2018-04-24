@@ -3,6 +3,7 @@ import math
 import numpy as np
 import sqlite3 as sql
 import os.path as path
+import sys
 
 EWMA_SEED = 0.1
 PROBABILITY_FIRST_PROBLEM_CORRECT = 0.894
@@ -150,63 +151,43 @@ def next_question(student_id, previous_question_id, previous_answer_correctness,
 	return None
 
 def main():
-	# l = [
-	# [0,1], 
-	# [1,0],
-	# [1,1],
-	# [1,1,1],
-	# [1,1,1,1],
-	# [1,1,1,1,1],
-	# [0,0,0,0,0],
-	# [0,0,0,0],
-	# [0,0,0],
-	# [0,0],
-	# [1,0,1,0],
-	# [1,0,1,0,1,0],
-	# [1,0,1,0,1,0,1,0],
-	# [0,1,1,1,1,1,1],
-	# [1,1,1,1,1,0,1,1,1],
-	# [1,1,1,1,1,1,1,1,1,1],
-	# [0,1,1,1,1,1,1,1,1,1,1],
-	# [0,0,0,0,0,1,1,1,1,1,1,1,1,1,1],
-	# [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1]
-	# ]
-	# con = sql.connect("mydb.db")
-	# cur = con.cursor()
-	# cur.execute('''Select correct
-	# 	from STUDENT_TEST
-	# 	where ITEST_id = 7278 AND SKILL = "unit-conversion" 
-	# 	order by actionId''')
-	# rows = cur.fetchall()
-	# array = [i[0] for i in rows]
-	# correct = sum(array)
-	# accuracy = AccuracyModel(len(array), correct, array)
-	# print accuracy.predict()
-	#for i in ['1821','1079','3601','954','1483','5347','8','7258','336','337','5638','6746','312','522','688']:
-	student_id = 6746
+	student_id = sys.argv[1]
+	skill = sys.argv[2]
 	BUFFER[student_id] = []
 	d = get_accuracy(student_id)
 
-	(problem_id, assistment_id, body, skill, is_original, answer) = new_question(student_id, "percent-of")
-	flag = submit_answer(student_id, problem_id, answer, skill)
-	print body, flag
-	(problem_id, assistment_id, body, skill, is_original, answer) = next_question(student_id, problem_id, flag, skill)
+	(problem_id, assistment_id, body, skill, is_original, answer) = new_question(student_id, skill)
+	while True:
+		print body
+		user_input = raw_input()
+		print "input your answer:"
+		print user_input
+		flag = submit_answer(student_id, problem_id, user_input, skill)
+		if flag == 1:
+			print "correct"
+		else:
+			print "wrong"
+		print "next question:"
+		(problem_id, assistment_id, body, skill, is_original, answer) = next_question(student_id, problem_id, flag, skill)
+	# flag = submit_answer(student_id, problem_id, answer, skill)
+	# print body, flag
+	# (problem_id, assistment_id, body, skill, is_original, answer) = next_question(student_id, problem_id, flag, skill)
 
-	flag = submit_answer(student_id, problem_id, "9", skill)
-	print body, flag
-	(problem_id, assistment_id, body, skill, is_original, answer) = next_question(student_id, problem_id, flag, skill)
+	# flag = submit_answer(student_id, problem_id, "9", skill)
+	# print body, flag
+	# (problem_id, assistment_id, body, skill, is_original, answer) = next_question(student_id, problem_id, flag, skill)
 
-	flag = submit_answer(student_id, problem_id, "10", skill)
-	print body, flag
-	(problem_id, assistment_id, body, skill, is_original, answer) = next_question(student_id, problem_id, flag, skill)
+	# flag = submit_answer(student_id, problem_id, "10", skill)
+	# print body, flag
+	# (problem_id, assistment_id, body, skill, is_original, answer) = next_question(student_id, problem_id, flag, skill)
 
-	flag = submit_answer(student_id, problem_id, "5", skill)
-	print body, flag
-	(problem_id, assistment_id, body, skill, is_original, answer) = next_question(student_id, problem_id, flag, skill)
+	# flag = submit_answer(student_id, problem_id, "5", skill)
+	# print body, flag
+	# (problem_id, assistment_id, body, skill, is_original, answer) = next_question(student_id, problem_id, flag, skill)
 
-	flag = submit_answer(student_id, problem_id, "5", skill)
-	print body, flag
-	(problem_id, assistment_id, body, skill, is_original, answer) = next_question(student_id, problem_id, flag, skill)
+	# flag = submit_answer(student_id, problem_id, "5", skill)
+	# print body, flag
+	# (problem_id, assistment_id, body, skill, is_original, answer) = next_question(student_id, problem_id, flag, skill)
 
 if __name__ == "__main__":
 	main()
