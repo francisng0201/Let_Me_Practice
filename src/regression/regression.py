@@ -92,7 +92,7 @@ def next_question(d, student_id):
 	#cur.execute("SELECT problemId FROM STUDENT_TEST WHERE ITEST_id = ?", (student_id,))
 	#row = cur.fetchall()
 	for k, v in d.iteritems():
-		cur.execute("SELECT body from Problem_Text WHERE Problem_Text.problem_id IN (SELECT problemId from STUDENT_TEST WHERE ITEST_id = ? AND SKILL = ?)", (student_id, k))
+		cur.execute("select * from QUESTIONS WHERE problem_id in (select distinct problemId from STUDENT_TEST where problemId in (Select distinct(problemId) from STUDENT_TEST where skill = ? and ITEST_id = ? group by problemId having actionId = max(actionId)) AND correct = 0) order by is_original desc", (k, student_id))
 		row = cur.fetchall()
 		questions[k] = row
 	#cur.execute("Select body from Problem_Text where ITEST_id = ? AND SKILL = ? order by actionId", (student_id, skill))
@@ -135,7 +135,9 @@ def main():
 	student_id = 6746
 	d = get_accuracy(student_id)
 	ok = next_question(d, student_id)
-	print ok
+	for k,v in ok.iteritems():
+		if len(v) != 0:
+			print k, len(v)
 
 if __name__ == "__main__":
 	main()
