@@ -80,7 +80,6 @@ def _signin():
     result = user.check_credentials(form['username'], form['password'])
     if result == False:
         return render_template('index.html', alert='error', message='Unknown username and/or incorrect password.') 
-    res = make_response(render_template('dashboard.html', username=form['username']))
+    res = make_response(redirect('/dashboard'))
     session['username'] = form['username']
     return res
-
