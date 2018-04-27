@@ -1,7 +1,5 @@
 import re
-
 from flask import *
-
 import models.user as user
 
 blueprint = Blueprint('users', __name__)
@@ -44,8 +42,8 @@ def _signin_validate(request):
         return False
     un0 = form['username']
     pw0 = form['password']
-    if len(un0) < 6 or len(un0) > 15:
-        return False
+    # if len(un0) < 6 or len(un0) > 15:
+    #     return False
     if len(pw0) < 6 or len(pw0) > 15:
         return False
     if re_username.match(form['username']) is None:

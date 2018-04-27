@@ -9,7 +9,7 @@ def _hash(password):
 def create_user(username, password, usertype):
     con = sql.connect(config.dbname)
     cur = con.cursor()
-    cur.execute('INSERT INTO users2 (username, hash, type, type_id) VALUES (?, ?, ?, ?)', (username, _hash(password), 'usertype', 123))
+    cur.execute('INSERT INTO users2 (username, hash, type, type_id) VALUES (?, ?, ?, ?)', (username, _hash(password), usertype, 123))
     con.commit()
 
 def check_credentials(username, password):

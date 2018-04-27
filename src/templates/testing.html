@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <script src="../static/js/slickQuiz_js/jquery.js"></script>
+    <script src="../static/js/slickQuiz_js/slickQuiz.js"></script>
+    <script src="../static/js/slickQuiz_js/master.js"></script>
+    <link href="../static/css/reset.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="../static/css/slickQuiz.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="../static/css/master.css" media="screen" rel="stylesheet" type="text/css">
+
+    <script>
+        // window.setInterval(function(){
+        //     document.getElementById('q').onclick = function() {
+        //         var text = $('#q_a').val();
+        //         $.ajax({
+        //             url: Flask.url_for('testing'),
+        //             type: 'POST',
+        //             data: JSON.stringify(text),  
+        //         })
+        //         .done(function(result){
+        //             console.log(result);
+        //         })
+                
+        //         console.log(text);
+        //         var quizJSON = {{ q | tojson | safe}};
+        //         console.log("scaffolding");
+        //     };
+        // }, 1000);
+    </script>
+
+    <body id="slickQuiz">
+            <script>var quizJSON = {{ q | tojson | safe}};
+            if (!quizJSON){
+                alert("No unanswered questions from this skill, returning");
+                close();
+            }
+    </script>
+        <h1 class="quizName"><!-- where the quiz name goes --></h1>
+        <div class="quizArea">
+            <div class="quizHeader">
+                <!-- where the quiz main copy goes -->
+
+                <a class="button startQuiz" href="#">Get Started!</a>
+            </div>
+
+            <!-- where the quiz gets built -->
+        </div>
+        <div class="quizResults">
+            <h3 class="quizLevel"><strong>Ranking:</strong> <span><!-- where the quiz ranking level goes --></span></h3>
+
+            <div class="quizResultsCopy">
+                <!-- where the quiz result copy goes -->
+            </div>
+        </div>
+    </body>
+</html>

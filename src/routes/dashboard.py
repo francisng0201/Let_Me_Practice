@@ -2,6 +2,7 @@ from flask import *
 from require_signin import *
 import sqlite3 as sql
 import config
+import models.graph as graph
 
 def get_data(username):
 	con = sql.connect(config.dbname)
@@ -16,7 +17,6 @@ def get_data(username):
 		table = cur.fetchall()
 		table = [i + (round(i[2]/float(i[1]), 2),) for i in table]
 		cur.execute("SELECT assignmentId, problemId, skill, correct, attemptCount FROM STUDENT_TEST WHERE ITEST_id = ? ORDER BY assignmentId ASC", (user_id,))
-		#cur.execute("SELECT assignmentId, problemId, Problem_Text.body, correct, attemptCount FROM STUDENT_TEST, Problem_Text WHERE STUDENT_TEST.problemId = Problem_Text.problem_id AND STUDENT_TEST.ITEST_id = ? ORDER BY assignmentId", (user_id,))
 		sub_table = cur.fetchall()
 	else:
 		cur.execute("SELECT ITEST_id, COUNT(assignmentId), SUM(correct) FROM STUDENT_TEST GROUP BY ITEST_id")
@@ -69,10 +69,12 @@ def _index():
 	if len(data) == 3:
 		user_type, table, sub_table = data
 		question = None
+		g = graph.create_graph_structure(session["username"])
 	else:
 		user_type, table, sub_table, question = data
+		g = None
 
-	return render_template('dashboard.html', username = session['username'], type = user_type, table = table, sub_table = sub_table, q = question)
+	return render_template('dashboard.html', username = session['username'], type = user_type, table = table, sub_table = sub_table, q = question, graph = g)
 
 @blueprint.route('/', methods=['POST'])
 @require_signin
@@ -86,7 +88,11 @@ def _add_test():
 		answer = request.form["answer"]
 		skill = request.form["skill"]
 		is_original = request.form["is_original"]
-		cur.execute("INSERT INTO Questions(body,skill,is_original,answer) VALUES (?,?,?,?)", (question, skill, is_original, answer))
+		cur.execute("SELECT MAX(problem_id) FROM Questions")
+		problem_id = str(int(cur.fetchall()[0][0]) + 1)
+		cur.execute("SELECT MAX(assistment_id) FROM Questions")
+		assistment_id = str(int(cur.fetchall()[0][0]) + 1)
+		cur.execute("INSERT INTO Questions(body,skill,is_original,answer, problem_id, assistment_id, answer) VALUES (?,?,?,?,?,?,?)", (question, skill, is_original, answer, problem_id, assistment_id, answer))
 	else:
 		problem_id = request.form["problem_id"]
 		if request.form['question'] != "":
@@ -99,6 +105,7 @@ def _add_test():
 			cur.execute("UPDATE Questions SET is_original = ? WHERE problem_id = ?", (request.form['is_original'], problem_id))
 
 	con.commit()
-
+	con.close()
 	user_type, table, sub_table, question = get_data(session["username"])
+
 	return render_template('dashboard.html', username = session['username'], type = user_type, table = table, sub_table = sub_table, q = question)

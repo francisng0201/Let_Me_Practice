@@ -1,7 +1,7 @@
 <div class="gradientbar"></div>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="top: 3px; height: 64px;">
   <a id="lmp-brand" class="navbar-brand" style="color: #aaa; margin-left: 30px;"
-    href="http://localhost:5005">
+    href="\">
     <span class="lmp-brand-gr" style="display: inline-block; transform: rotate(8deg); margin: 0; position: relative; bottom: 0px;">Let</span>
     <span class="lmp-brand-w" style="display: inline-block; transform:
       rotate(-8deg); margin-left: -2px; position: relative; color: white; top: -1px;">Me</span>
@@ -15,24 +15,24 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" style="color: #f5cc51;/*color: white;*/" href="#">Home<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" style="color: #f5cc51;/*color: white;*/" href="\">Home<span class="sr-only">(current)</span></a>
       </li>
     </ul>
     <ul class="navbar-nav" style="float: right; margin-right: 30px;">
       {% if username %}
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:5005/dashboard/">Welcome back,
+          <a class="nav-link" href="{{url_for('dashboard._index')}}">Welcome back,
             {{username}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('sign_out')}}">Sign out</a>
         </li>
       {% else %}
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:5005/users/signin">Sign In</a>
+          <a class="nav-link" href="{{url_for('users._signin')}}">Sign In</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:5005/users/new">Sign Up</a>
+          <a class="nav-link" href="{{url_for('users._signup')}}">Sign Up</a>
         </li>
       {% endif %}
     </ul>

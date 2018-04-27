@@ -1,83 +1,368 @@
 <!doctype html>
 <html>
-     {% include "head.html" %}
-   <body style="/*padding-top: 8rem;*/">
-     {% include "header.html" %}
+
+  {% include "head.html" %}
+    <body style="/*padding-top: 8rem;*/">
+  {% include "header.html" %}
+
   <script>
-    $(document).ready(function () {
+  var newRowData = JSON.parse('{{ sub_table | tojson | safe}}');
+  var type = JSON.parse('{{ type | tojson | safe}}');
+
+  function fnFormatDetails(table_id, html) {
+    var sOut = "<table id=\"info_" + table_id + "\">";
+    sOut += html;
+    sOut += "</table>";
+    return sOut;
+  }
+
+  var iTableCounter = 1;
+      var oTable;
+      var oInnerTable;
+      var TableHtml;
+      var detailsTableHtml;
+      //Run On HTML Build
+      $(document).ready(function () {
+          TableHtml = $("#info").html();
+          detailsTableHtml = $("#detailsTable").html();
+
+          //Insert a 'details' column to the table
+          var nCloneTh = document.createElement('th');
+          var nCloneTd = document.createElement('td');
+          nCloneTd.innerHTML = '<img src="http://i.imgur.com/SD7Dz.png">';
+          nCloneTd.className = "center";
+
+          $('#info thead tr').each(function () {
+              this.insertBefore(nCloneTh, this.childNodes[0]);
+          });
+
+          $('#info tbody tr').each(function () {
+              this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
+          });
+
+          //Initialse DataTables, with no sorting on the 'details' column
+
+          var oTable = $('#question').dataTable({
+              "bJQueryUI": true,
+              "sPaginationType": "full_numbers",
+              "aoColumnDefs": [
+              { "bSortable": false, "aTargets": [0] }
+          ],
+              "aaSorting": [[1, 'asc']]
+          });
+          var oTable = $('#info').dataTable({
+              "bJQueryUI": true,
+              "sPaginationType": "full_numbers",
+              "aoColumnDefs": [
+              { "bSortable": false, "aTargets": [0] }
+          ],
+              "aaSorting": [[1, 'asc']]
+          });
+          /* Add event listener for opening and closing details
+          * Note that the indicator for showing which row is open is not controlled by DataTables,
+          * rather it is done here
+          */
+              $('#info tbody').on('click', 'td img', function () {
+              var nTr = $(this).parents('tr')[0];
+              var nTds = this;
+              if (oTable.fnIsOpen(nTr)) {
+                  /* This row is already open - close it */
+                  this.src = "http://i.imgur.com/SD7Dz.png";
+                  oTable.fnClose(nTr);
+              }
+              else {
+                  /* Open this row */
+                  var rowIndex = $(nTr.children[1]).text();
+                  var d = newRowData[rowIndex];
+
+                  var detailsRowData = [];
+                  for (var i in d){
+                    detailsRowData[i] = d[i];
+                  }
+
+                  this.src = "http://i.imgur.com/d4ICC.png";
+                  oTable.fnOpen(nTr, fnFormatDetails(iTableCounter, detailsTableHtml), 'details');
+                  if (type == "student"){
+                    oInnerTable = $("#info_" + iTableCounter).dataTable({
+                        "bJQueryUI": true,
+                        "bFilter": false,
+                        "aaData": detailsRowData,
+                        "bSort" : true, // disables sorting
+                        "aoColumns": [
+                          { "mDataProp": "problem_id" },
+                          { "mDataProp": "skill" },
+                          { "mDataProp": "correct" },
+                          { "mDataProp": "attemptCount" }
+                        ],
+                        "bPaginate": false,
+                        "oLanguage": {
+                          "sInfo": "_TOTAL_ entries"
+                        },
+                    });
+                    iTableCounter = iTableCounter + 1;                  
+                  } else {
+                    oInnerTable = $("#info_" + iTableCounter).dataTable({
+                        "bJQueryUI": true,
+                        "bFilter": false,
+                        "aaData": detailsRowData,
+                        "bSort" : true, // disables sorting
+                        "aoColumns": [
+                          { "mDataProp": "test_id" },
+                          { "mDataProp": "num_question" },
+                          { "mDataProp": "num_correct" },
+                          { "mDataProp": "percentage" }
+                        ],
+                        "bPaginate": false,
+                        "oLanguage": {
+                          "sInfo": "_TOTAL_ entries"
+                        },
+                    });
+                    iTableCounter = iTableCounter + 1;
+                  }
+              }
+          });
+        });
+  </script>
+  {% if type == "student" %}
+  <script>
+    let d = JSON.parse('{{ graph | tojson | safe}}');
+    var nodes = new vis.DataSet(d["nodes"]);
+    var edges = new vis.DataSet(d["edges"]);
+    var data = {nodes: nodes, edges: edges};
+    $(document).ready(function() {
       let container = document.getElementById('lmp-graph');
-      let data = {
-        nodes: [{
-          id: 0,
-          length: 100,
-          color: '#f5cc51',
-          label: "Pre-algebra"
-        }, {
-          id: 1,
-          length: 100,
-          color: '#f5cc51',
-          label: "Linear algebra"
-        }, {
-          id: 2,
-          color: '#f5cc51',
-          label: "Rocket Science"
-        }],
-        edges: [{
-          from: 0,
-          to: 2
-        }, {
-          from: 1,
-          to: 2
-        }]
-      };
       let options = {
+        layout: {
+          randomSeed: 123,
+          improvedLayout:true,
+          hierarchical: {
+            enabled:true,
+            levelSeparation: 150,
+            nodeSpacing: 300,
+            treeSpacing: 200,
+            blockShifting: true,
+            edgeMinimization: true,
+            parentCentralization: true,
+            direction: 'LR',        // UD, DU, LR, RL
+            sortMethod: 'directed'   // hubsize, directed
+          }
+        },
         nodes: {
-            shape: 'dot',
-            size: 30,
-            font: {
-                size: 32
-            },
-            borderWidth: 2,
-            shadow: true
+          shape: 'dot',
+          font: {
+            size: 16
+          },
+          borderWidth: 2,
+          shadow: true,
+
         },
         edges: {
-            width: 2,
-            shadow:true
+          arrows: {to: {enabled: true, scaleFactor:1, type:'arrow'}},
+          width: 2,
+          shadow:true
         }
       };
       let network = new vis.Network(container, data, options);
+      network.on("click", function (params) {
+        var node = params.nodes;
+        if (node.length > 0){
+          $(".custom-menu").finish().toggle(100);
+          $("#mastry").text("Mastry score for this skill is: " + nodes.get(node)[0].accuracy);
+          $("#take_test").text("Take test for " + nodes.get(node)[0].label);
+          $(".custom-menu").css({
+              top: params.event.center.y,
+              left: params.event.center.x
+          });
+        } else{
+          $(".custom-menu").finish().toggle(100);
+        }
+      });
     });
+    function makeNewWindow() {
+      var mapForm = document.createElement("form");
+      mapForm.target = "_blank";
+      mapForm.method = "POST";
+      var getUrl = window.location;
+      mapForm.action = getUrl.origin + "/testing/";
+
+      var mapInput = document.createElement("input");
+      mapInput.type = "hidden";
+      mapInput.name = "skill";
+      val = $("#take_test").text().split(" ");
+      mapInput.value = val[val.length - 1];
+      mapForm.appendChild(mapInput);
+
+      document.body.appendChild(mapForm);
+      mapForm.submit();
+    }
   </script>
+  {% endif %}
     <div class="container">
       <div class="row" style="margin-top: 90px; ">
-        <div class="col-lg">
-           <h2 style="margin-bottom: 10px; margin-left: -15px;">Dashboard</h2>
-        </div>
+          <div class="col-lg">
+           {% if type == "student" %}
+           <h2 style="margin-bottom: 10px; margin-left: -15px;">Student Dashboard</h2>
+           {% else %}
+           <h2 style="margin-bottom: 10px; margin-left: -15px;">Teacher Dashboard</h2>
+           {% endif %}
+         </div>
       </div>
-      <div class="row">
-        <div style="background-color: #003366; color: white; line-height:
-          206px; position: relative;" class="col-md-3 col-lmp">
-            <div style="position: absolute; width: 3px; top: 0; bottom: 0; right: 0;" class="gradientbar-vert"></div> <div style="text-align: right; margin-left: 75px; margin-top: 20px; display: inline-block;">
-
-              <h4 style="margin-bottom: 15px;"><span style="color:
-                  #aaa;">Overview</span></h4>
-              <h4 style="margin-bottom: 29px; color: #f5cc51;">Skill
-                Graph
-                </h4>
-              <h4 style="margin-bottom: 29px;"><span style="color: #aaa;">Test
-                  results</span></h4>
-              <h4 style="margin-bottom: 29px;"><span style="color:
-                  #aaa;">Feedback</span></h4>
-            </div>
-          </div>
-          <div style="background-color: #eeeeee;" class="col-md-9">
-            <div style="height: 256px;" id="lmp-graph">
+      <div>
+        {% if type == "student" %}
+          <a class="btn btn-info" href="#graph">Skill graph</a>
+          <a class="btn btn-info" href="#info">past result</a>
+        {% else %}
+          <a class="btn btn-info" href="#info">Student Info</a>
+          <a class="btn btn-info" href="#add">Add Question</a>
+          <a class="btn btn-info" href="#update">Update Question</a>
+          <a class="btn btn-info" href="#delete">Delete Question</a>
+        {% endif %}
+      </div>
+      {% if type == "student" %}
+        <div class="row" id = "graph">
+          <div class="container">
+            <ul class='custom-menu'>
+              <li id = "mastry"></li>
+  }
+  }
+<!--               <li id = "take_test" onclick = "javascript:window.open('http://localhost:5005/test')">Take test</li>
+ -->              <li id = "take_test" onclick = "makeNewWindow();">Take test</li>
+            </ul>
+            <div style="height: 512px;" id="lmp-graph">
             </div>
           </div>
           <div class="row lmp-dash-content">
           </div>
         </div>
+      {% endif %}
+      <div class = "container">
+        <table class="table table-striped table-bordered" style="width:100%" id = "info">
+          <thead>
+            {% if type == "student"%}
+              <tr>
+                <th>assignment id</th>
+                <th>Number of questions</th>
+                <th>Number of correct</th>
+                <th>Score</th>
+              </tr>
+            {% else %}
+              <tr>
+                <th>student id</th>
+                <th>Number of tests</th>
+                <th>Number of correct</th>
+                <th>average</th>
+              </tr>     
+            {% endif %}
+          </thead>
+          <tbody>
+            {% for t in table %}
+              <tr>
+                <td>{{t[0]}}</td>
+                <td>{{t[1]}}</td>
+                <td>{{t[2]}}</td>
+                <td>{{t[3]}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div style="display:none">    
+          <table id="detailsTable">
+            <thead>
+              {% if type == "student" %}
+                <tr>
+                  <th>Problem ID</th>
+                  <th>Skill</th>
+                  <th>Correctness</th>
+                  <th>Attempt Count</th>
+                </tr>
+              {% else %}
+                <tr>
+                  <th>Test ID</th>
+                  <th>Number of Questions</th>
+                  <th>Number of Correct</th>
+                  <th>Score</th>
+                </tr>
+              {% endif %}
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
+<!--       <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#q_table">c</button>  
+ -->      {% if type == "teacher" %}
+        <div class="container" id = "q_table">
+          <table class="table table-striped table-bordered" style="width:100%" id = "question">
+            <thead>
+              <tr>
+                <th>Problem ID</th>
+                <th>Assistment ID</th>
+                <th>Question</th>
+                <th>Skill</th>
+                <th>Is Scaffolding?</th>
+                <th>Answer</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for qq in q%}
+                <tr>
+                  <td>{{qq[0]}}</td>
+                  <td>{{qq[1]}}</td>
+                  <td>{{qq[2]}}</td>
+                  <td>{{qq[3]}}</td>
+                  <td>{{qq[4]}}</td>
+                  <td>{{qq[5]}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+<!--       {% endif %}
+      {% if type == "teacher" %} -->
+      <div id = "add">
+        <h2>Add New Question</h2>
+          <div class = "column">
+            <form method = "POST">
+              <label for = "q">Question:</label>
+              <input type = "text" class="form-control" name = "question">
+              <label for = "a">Answer:</label>
+              <input type="text" class="form-control" name = "answer">
+              <label for = "q">Skill:</label>
+              <input type = "text" class="form-control" name = "skill">
+              <label for = "a">Is scaffolding:</label>
+              <input type="" e="text" class="form-control" name = "is_original">
+              <button name="name" value="value" type="submit">submit</button>
+            </form>
+          </div>
+      </div>
+      <div id = "update">
+        <h2>Update Question</h2>
+          <div class = "column">
+            <form method = "POST">
+              <label for = "q">the Problem ID you want to change:</label>
+              <input type = "text" class="form-control" name = "problem_id">
+              <label for = "q">Question:</label>
+              <input type = "text" class="form-control" name = "question">
+              <label for = "a">Answer:</label>
+              <input type="text" class="form-control" name = "answer">
+              <label for = "q">Skill:</label>
+              <input type = "text" class="form-control" name = "skill">
+              <label for = "a">Is scaffolding:</label>
+              <input type="" e="text" class="form-control" name = "is_original">
+              <button name="name" value="value" type="submit">submit</button>
+            </form>
+          </div>
+      </div>
+      <div id = "delete">
+        <h2>Delete Question</h2>
+          <div class = "column">
+            <form method = "POST">
+              <label for = "q">the Problem ID you want to delete:</label>
+              <input type = "text" class="form-control" name = "delete_problem_id">
+              <button name="name" value="value" type="submit">submit</button>
+            </form>
+          </div>
+      </div>
+      {% endif %}
     </div>
-   </body>
+  </body>
 </html>

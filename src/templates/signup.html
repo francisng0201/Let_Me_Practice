@@ -125,12 +125,18 @@
     <div style="margin-bottom: 0; max-width: 660px; margin-left: auto; margin-right: auto;" class="row">
       <div style="height: 92px; padding-top: 12px;" class="col-md">
     <form style="padding-top: 0;" class="form-signup" method="POST"
-      action="http://localhost:5005/users/new">
+      action="{{url_for('users._signup')}}">
       <input type="hidden" name="usertype" value="student" id="usertype">
             <div class="form-group">
               <label>Username</label>
               <input type="text" class="form-control" name="username" placeholder="Username">
             </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" class="form-control" name="email" placeholder="Email Address">
+            </div>
+        </div>
+      <div style="height: 92px; padding-top: 12px;" class="col-md">
             <div class="form-group">
               <label>Password</label>
               <input type="password" class="form-control" name="password" placeholder="Password">
@@ -138,16 +144,6 @@
             <div class="form-group">
               <label>Confirm Password</label>
               <input type="password" class="form-control" name="password2" placeholder="Password">
-            </div>
-        </div>
-      <div style="height: 92px; padding-top: 12px;" class="col-md">
-            <div class="form-group">
-              <label>Age</label>
-              <input type="text" class="form-control" name="age" placeholder="Age">
-            </div>
-            <div class="form-group">
-              <label>Email Address</label>
-              <input type="email" class="form-control" name="email" placeholder="Email Address">
             </div>
             <div style="width: 100%;"> 
               <button style="width: 100%; margin-top: 32px;" class="btn btn-primary" type="submit" value="Sign up">
