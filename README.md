@@ -1,5 +1,7 @@
 # Let Me Practice!
 
+An interactive website allowing student to take tests built with Python and Flask
+
 * take tests
 * front-end
 * advanced functionality:
