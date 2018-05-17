@@ -1,6 +1,8 @@
-# Let Me Practice! (http://mimilucky123.pythonanywhere.com/)
+# Let Me Practice! 
 
 An interactive website allowing student to take tests built with Python and Flask
+
+(http://mimilucky123.pythonanywhere.com/)
 
 * take tests
 * front-end
