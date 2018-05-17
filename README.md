@@ -18,4 +18,5 @@ An interactive website allowing student to take tests built with Python and Flas
 * visualization dashboard
 
 
-![alt text] (https://raw.githubusercontent.com/francisng0201/Let_Me_Practice/acf56458/dashboard.png)
+![visualization 
+dashboard] (https://raw.githubusercontent.com/francisng0201/Let_Me_Practice/acf56458/dashboard.png)
